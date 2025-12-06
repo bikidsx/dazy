@@ -1,6 +1,6 @@
 {
   "name": "dazy",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "description": "Developer-first terminal UI for Docker management",
   "type": "module",
   "bin": {
@@ -21,7 +21,7 @@
     "format": "prettier --write \"src/**/*.ts\""
   },
   "keywords": ["docker", "cli", "tui", "containers", "devtools"],
-  "author": "",
+  "author": "https://github.com/bikidsx/dazy",
   "license": "MIT",
   "dependencies": {
     "dockerode": "^4.0.2",

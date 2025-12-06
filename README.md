@@ -175,7 +175,6 @@ Auto-detect project type, suggest services, quick setup wizards.
 ### 🎨 Phase 5: Polish (Planned)
 Live stats dashboard, cleanup automation, registry browser, themes.
 
-**Full details:** [PRODUCT.md](./PRODUCT.md)
 
 ## 📚 Documentation
 
@@ -190,5 +189,4 @@ MIT License - see [LICENSE](./LICENSE)
 
 ---
 
-**Current Status:** Phase 2 Complete ✅  
-**Next Up:** Phase 3 - Multi-environment support
+
