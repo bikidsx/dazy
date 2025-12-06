@@ -1,0 +1,31 @@
+{
+  "name": "elasticsearch",
+  "description": "Elasticsearch search engine",
+  "version": "1.0.0",
+  "tags": ["search", "elasticsearch", "database"],
+  "image": "elasticsearch:8.11.0",
+  "ports": [
+    {
+      "host": 9200,
+      "container": 9200,
+      "protocol": "tcp"
+    },
+    {
+      "host": 9300,
+      "container": 9300,
+      "protocol": "tcp"
+    }
+  ],
+  "environment": {
+    "discovery.type": "single-node",
+    "xpack.security.enabled": "false",
+    "ES_JAVA_OPTS": "-Xms512m -Xmx512m"
+  },
+  "volumes": [
+    {
+      "source": "es-data",
+      "target": "/usr/share/elasticsearch/data"
+    }
+  ],
+  "restart": "unless-stopped"
+}

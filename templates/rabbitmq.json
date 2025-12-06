@@ -1,0 +1,44 @@
+{
+  "name": "rabbitmq",
+  "description": "RabbitMQ message broker with management UI",
+  "version": "1.0.0",
+  "tags": ["queue", "messaging", "rabbitmq"],
+  "image": "rabbitmq:3-management-alpine",
+  "ports": [
+    {
+      "host": 5672,
+      "container": 5672,
+      "protocol": "tcp"
+    },
+    {
+      "host": 15672,
+      "container": 15672,
+      "protocol": "tcp"
+    }
+  ],
+  "environment": {
+    "RABBITMQ_DEFAULT_USER": "${RABBITMQ_USER}",
+    "RABBITMQ_DEFAULT_PASS": "${RABBITMQ_PASSWORD}"
+  },
+  "volumes": [
+    {
+      "source": "rabbitmq-data",
+      "target": "/var/lib/rabbitmq"
+    }
+  ],
+  "restart": "unless-stopped",
+  "variables": [
+    {
+      "name": "RABBITMQ_USER",
+      "description": "RabbitMQ username",
+      "default": "admin",
+      "type": "string"
+    },
+    {
+      "name": "RABBITMQ_PASSWORD",
+      "description": "RabbitMQ password",
+      "required": true,
+      "type": "password"
+    }
+  ]
+}

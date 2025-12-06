@@ -1,0 +1,35 @@
+{
+  "name": "nginx",
+  "description": "Nginx web server",
+  "version": "1.0.0",
+  "tags": ["web", "proxy", "nginx"],
+  "image": "nginx:alpine",
+  "ports": [
+    {
+      "host": 80,
+      "container": 80,
+      "protocol": "tcp"
+    },
+    {
+      "host": 443,
+      "container": 443,
+      "protocol": "tcp"
+    }
+  ],
+  "volumes": [
+    {
+      "source": "${HTML_PATH}",
+      "target": "/usr/share/nginx/html",
+      "readonly": true
+    }
+  ],
+  "restart": "unless-stopped",
+  "variables": [
+    {
+      "name": "HTML_PATH",
+      "description": "Path to HTML files",
+      "default": "./html",
+      "type": "string"
+    }
+  ]
+}

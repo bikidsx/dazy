@@ -1,0 +1,52 @@
+{
+  "name": "postgres",
+  "description": "PostgreSQL database server",
+  "version": "1.0.0",
+  "tags": ["database", "sql", "postgres"],
+  "image": "postgres:15-alpine",
+  "ports": [
+    {
+      "host": 5432,
+      "container": 5432,
+      "protocol": "tcp"
+    }
+  ],
+  "environment": {
+    "POSTGRES_PASSWORD": "${DB_PASSWORD}",
+    "POSTGRES_DB": "${DB_NAME}",
+    "POSTGRES_USER": "${DB_USER}"
+  },
+  "volumes": [
+    {
+      "source": "pgdata",
+      "target": "/var/lib/postgresql/data"
+    }
+  ],
+  "restart": "unless-stopped",
+  "healthcheck": {
+    "test": ["CMD-SHELL", "pg_isready -U postgres"],
+    "interval": "10s",
+    "timeout": "5s",
+    "retries": 5
+  },
+  "variables": [
+    {
+      "name": "DB_PASSWORD",
+      "description": "Database password",
+      "required": true,
+      "type": "password"
+    },
+    {
+      "name": "DB_NAME",
+      "description": "Database name",
+      "default": "postgres",
+      "type": "string"
+    },
+    {
+      "name": "DB_USER",
+      "description": "Database user",
+      "default": "postgres",
+      "type": "string"
+    }
+  ]
+}
