@@ -3,14 +3,12 @@
 > Make Docker as easy as running `npm install` - intuitive, fast, and shareable.
 
 ```
-                                        ,---.
- ██████╗  █████╗ ███████╗██╗   ██╗    ,'     `.
- ██╔══██╗██╔══██╗╚══███╔╝╚██╗ ██╔╝   /  __   __\
- ██║  ██║███████║  ███╔╝  ╚████╔╝   |  (  \ /  )
- ██║  ██║██╔══██║ ███╔╝    ╚██╔╝    |   `.(*).'
- ██████╔╝██║  ██║███████╗   ██║      \    /|\
- ╚═════╝ ╚═╝  ╚═╝╚══════╝   ╚═╝       `--' | `--'
-                                          |
+ ██████╗  █████╗ ███████╗██╗   ██╗        .
+ ██╔══██╗██╔══██╗╚══███╔╝╚██╗ ██╔╝       ":"
+ ██║  ██║███████║  ███╔╝  ╚████╔╝      ___:____     |"\/"|
+ ██║  ██║██╔══██║ ███╔╝    ╚██╔╝     ,'        `.    \  /
+ ██████╔╝██║  ██║███████╗   ██║     |  O        \___/  |
+ ╚═════╝ ╚═╝  ╚═╝╚══════╝   ╚═╝   ~^~^~^~^~^~^~^~^~^~^~^~^~
 ```
 
 **Dazy** is a developer-first terminal UI for Docker that goes beyond monitoring to actively help you set up, share, and manage containerized environments. Unlike existing tools, Dazy focuses on workflow automation, template management, and team collaboration.

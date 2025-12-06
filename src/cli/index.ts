@@ -13,20 +13,18 @@ import { composeCommand } from './commands/compose.js';
 import { logger } from '../utils/logger.js';
 
 const ASCII_LOGO = `
-                                        ,---.
- ██████╗  █████╗ ███████╗██╗   ██╗    ,'     \`.
- ██╔══██╗██╔══██╗╚══███╔╝╚██╗ ██╔╝   /  __   __\\
- ██║  ██║███████║  ███╔╝  ╚████╔╝   |  (  \\ /  )
- ██║  ██║██╔══██║ ███╔╝    ╚██╔╝    |   \`.(*).'
- ██████╔╝██║  ██║███████╗   ██║      \\    /|\\
- ╚═════╝ ╚═╝  ╚═╝╚══════╝   ╚═╝       \`--' | \`--'
-                                          |
+ ██████╗  █████╗ ███████╗██╗   ██╗        .
+ ██╔══██╗██╔══██╗╚══███╔╝╚██╗ ██╔╝       ":"
+ ██║  ██║███████║  ███╔╝  ╚████╔╝      ___:____     |"\\/"|
+ ██║  ██║██╔══██║ ███╔╝    ╚██╔╝     ,'        \`.    \\  /
+ ██████╔╝██║  ██║███████╗   ██║     |  O        \\___/  |
+ ╚═════╝ ╚═╝  ╚═╝╚══════╝   ╚═╝   ~^~^~^~^~^~^~^~^~^~^~^~^~
 `;
 
 async function mainMenu() {
   console.clear();
   console.log(chalk.cyan(ASCII_LOGO));
-  console.log(chalk.gray('🐳 Docker Manager v0.1.0'));
+  console.log(chalk.gray('🐳 Docker Manager v0.2.4'));
   console.log(chalk.gray('─'.repeat(50)) + '\n');
 
   // Check Docker connection
