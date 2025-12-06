@@ -1,6 +1,6 @@
 {
   "name": "dazy",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Developer-first terminal UI for Docker management",
   "type": "module",
   "bin": {
@@ -13,6 +13,14 @@
     "LICENSE",
     "CHANGELOG.md"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bikidsx/dazy.git"
+  },
+  "homepage": "https://github.com/bikidsx/dazy#readme",
+  "bugs": {
+    "url": "https://github.com/bikidsx/dazy/issues"
+  },
   "scripts": {
     "dev": "bun run src/cli/index.ts",
     "build": "bun build src/cli/index.ts --outdir dist --target node --format esm",
@@ -20,8 +28,8 @@
     "lint": "eslint src --ext .ts",
     "format": "prettier --write \"src/**/*.ts\""
   },
-  "keywords": ["docker", "cli", "tui", "containers", "devtools"],
-  "author": "https://github.com/bikidsx/dazy",
+  "keywords": ["docker", "cli", "tui", "containers", "devtools", "docker-compose", "templates"],
+  "author": "bikidsx",
   "license": "MIT",
   "dependencies": {
     "dockerode": "^4.0.2",
