@@ -1,8 +1,10 @@
 import inquirer from 'inquirer';
 import ora from 'ora';
+import chalk from 'chalk';
 import { DockerClient } from '../../core/docker/client.js';
 import { renderContainerList, renderContainerStats } from '../../ui/components/ContainerList.js';
 import { logger } from '../../utils/logger.js';
+import { formatBytes, formatPercentage } from '../../utils/format.js';
 
 export async function containersCommand() {
   const client = new DockerClient();
@@ -29,8 +31,9 @@ export async function containersCommand() {
       name: 'action',
       message: 'What would you like to do?',
       choices: [
-        { name: '📋 View Logs', value: 'logs' },
-        { name: '💻 Execute Shell', value: 'exec' },
+        { name: '📊 Live Stats', value: 'stats' },
+        { name: '� Vxiew Logs', value: 'logs' },
+        { name: '� RExecute Shell', value: 'exec' },
         { name: '🔄 Restart Container', value: 'restart' },
         { name: '⏸️  Stop Container', value: 'stop' },
         { name: '▶️  Start Container', value: 'start' },
@@ -59,6 +62,14 @@ export async function containersCommand() {
 
   try {
     switch (action) {
+      case 'stats':
+        if (container.state !== 'running') {
+          logger.warn('Container must be running to view stats');
+          break;
+        }
+        await showLiveStats(containerId, container.name);
+        break;
+
       case 'logs':
         const logSpinner = ora('Fetching logs...').start();
         const logs = await client.getContainerLogs(containerId);
@@ -109,4 +120,80 @@ export async function containersCommand() {
   } catch (error: any) {
     logger.error(`Failed: ${error.message}`);
   }
+}
+
+async function showLiveStats(containerId: string, containerName: string) {
+  const Docker = (await import('dockerode')).default;
+  const docker = new Docker({ socketPath: '/var/run/docker.sock' });
+  const container = docker.getContainer(containerId);
+
+  console.log(chalk.cyan(`\n📊 Live Stats - ${containerName}`));
+  console.log(chalk.gray('Press Ctrl+C to exit\n'));
+  console.log(chalk.gray('─'.repeat(60)));
+
+  const stream = await container.stats({ stream: true });
+
+  stream.on('data', (data: Buffer) => {
+    try {
+      const stats = JSON.parse(data.toString());
+
+      // Calculate CPU percentage
+      const cpuDelta = stats.cpu_stats.cpu_usage.total_usage - stats.precpu_stats.cpu_usage.total_usage;
+      const systemDelta = stats.cpu_stats.system_cpu_usage - stats.precpu_stats.system_cpu_usage;
+      const cpuCount = stats.cpu_stats.online_cpus || 1;
+      const cpuPercent = systemDelta > 0 ? (cpuDelta / systemDelta) * cpuCount * 100 : 0;
+
+      // Calculate memory
+      const memUsage = stats.memory_stats.usage || 0;
+      const memLimit = stats.memory_stats.limit || 1;
+      const memPercent = (memUsage / memLimit) * 100;
+
+      // Network I/O
+      let netRx = 0;
+      let netTx = 0;
+      if (stats.networks) {
+        Object.values(stats.networks).forEach((net: any) => {
+          netRx += net.rx_bytes || 0;
+          netTx += net.tx_bytes || 0;
+        });
+      }
+
+      // Block I/O
+      let blockRead = 0;
+      let blockWrite = 0;
+      if (stats.blkio_stats?.io_service_bytes_recursive) {
+        stats.blkio_stats.io_service_bytes_recursive.forEach((io: any) => {
+          if (io.op === 'read' || io.op === 'Read') blockRead += io.value;
+          if (io.op === 'write' || io.op === 'Write') blockWrite += io.value;
+        });
+      }
+
+      // Clear line and print stats
+      process.stdout.write('\x1B[2K\x1B[1A'.repeat(6));
+      console.log(`${chalk.bold('CPU:')}     ${formatPercentage(cpuPercent).padEnd(10)} ${renderBar(cpuPercent, 30)}`);
+      console.log(`${chalk.bold('Memory:')}  ${formatBytes(memUsage).padEnd(10)} / ${formatBytes(memLimit)} (${formatPercentage(memPercent)})`);
+      console.log(`${chalk.bold('Net RX:')}  ${formatBytes(netRx)}`);
+      console.log(`${chalk.bold('Net TX:')}  ${formatBytes(netTx)}`);
+      console.log(`${chalk.bold('Disk R:')}  ${formatBytes(blockRead)}`);
+      console.log(`${chalk.bold('Disk W:')}  ${formatBytes(blockWrite)}`);
+    } catch {
+      // Ignore parse errors
+    }
+  });
+
+  // Handle Ctrl+C
+  await new Promise<void>(resolve => {
+    process.on('SIGINT', () => {
+      (stream as any).destroy?.();
+      console.log(chalk.gray('\n\nStats stopped.'));
+      resolve();
+    });
+  });
+}
+
+function renderBar(percent: number, width: number): string {
+  const filled = Math.round((percent / 100) * width);
+  const empty = width - filled;
+  const bar = chalk.green('█'.repeat(filled)) + chalk.gray('░'.repeat(empty));
+  return `[${bar}]`;
 }

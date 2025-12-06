@@ -2,6 +2,23 @@
 
 All notable changes to Dazy will be documented in this file.
 
+## [0.2.6] - 2025-12-06
+
+### Added
+- **Live Stats** - Real-time CPU, memory, network I/O, and disk I/O monitoring for containers
+- Visual progress bar for CPU usage
+- Press Ctrl+C to exit stats view
+
+### Fixed
+- **Templates in production** - Built-in templates now embedded in code instead of external JSON files
+- Templates work correctly when installed via npm/bun globally
+
+### Changed
+- Refactored template manager to use embedded templates
+- Improved Linux permission handling with sudo prompt
+
+---
+
 ## [0.2.0] - 2025-12-06
 
 ### Added - Phase 2: Templates & Compose

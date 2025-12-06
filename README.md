@@ -97,6 +97,16 @@ Dazy solves these problems with:
 
 - Docker daemon running
 
+### Linux: Docker Permissions
+
+On Linux, Docker requires root access by default. Add your user to the docker group:
+
+```bash
+sudo usermod -aG docker $USER
+# Log out and back in, then run:
+dazy
+```
+
 ### Install via npm
 
 ```bash

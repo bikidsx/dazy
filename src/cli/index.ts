@@ -32,8 +32,39 @@ async function mainMenu() {
   const isConnected = await client.ping();
   
   if (!isConnected) {
-    logger.error('Cannot connect to Docker daemon. Is Docker running?');
-    process.exit(1);
+    // Check if we're on Linux and not root - likely a permissions issue
+    const isLinux = process.platform === 'linux';
+    const isRoot = process.getuid?.() === 0;
+    
+    if (isLinux && !isRoot) {
+      logger.warn('Cannot connect to Docker daemon - permission denied.\n');
+      
+      const { useSudo } = await inquirer.prompt([
+        {
+          type: 'confirm',
+          name: 'useSudo',
+          message: 'Run with sudo to access Docker?',
+          default: true
+        }
+      ]);
+      
+      if (useSudo) {
+        const { spawnSync } = await import('child_process');
+        const args = process.argv.slice(1);
+        spawnSync('sudo', [process.argv[0], ...args], { stdio: 'inherit' });
+        process.exit(0);
+      } else {
+        console.log(chalk.yellow('\nTo fix permanently, add your user to the docker group:'));
+        console.log(chalk.gray('  sudo usermod -aG docker $USER'));
+        console.log(chalk.gray('  Then log out and back in\n'));
+        process.exit(1);
+      }
+    } else {
+      logger.error('Cannot connect to Docker daemon. Is Docker running?');
+      console.log(chalk.gray('\nMake sure Docker is running:'));
+      console.log(chalk.gray('  sudo systemctl start docker\n'));
+      process.exit(1);
+    }
   }
 
   const { choice } = await inquirer.prompt([

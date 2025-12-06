@@ -1,39 +1,22 @@
 import { readdirSync, readFileSync, writeFileSync, existsSync } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { join } from 'path';
 import type { Template, TemplateRunOptions } from '../../types/template.js';
 import { ConfigManager } from '../storage/config.js';
 import { DockerClient } from '../docker/client.js';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import { BUILT_IN_TEMPLATES } from './built-in.js';
 
 export class TemplateManager {
   private config: ConfigManager;
   private docker: DockerClient;
-  private builtInDir: string;
 
   constructor() {
     this.config = new ConfigManager();
     this.docker = new DockerClient();
-    
-    // Try multiple possible locations for templates
-    // 1. When bundled: templates/ next to dist/
-    // 2. When in development: templates/ from project root
-    const possiblePaths = [
-      join(__dirname, '../../templates'),           // From dist/index.js
-      join(__dirname, '../../../templates'),        // From src/
-      join(process.cwd(), 'templates'),             // From current directory
-      join(dirname(process.argv[1]), '../templates') // From executable location
-    ];
-    
-    this.builtInDir = possiblePaths.find(p => existsSync(p)) || possiblePaths[0];
   }
 
   async list(): Promise<{ custom: Template[]; builtIn: Template[] }> {
     const custom = this.loadCustomTemplates();
-    const builtIn = this.loadBuiltInTemplates();
-    return { custom, builtIn };
+    return { custom, builtIn: BUILT_IN_TEMPLATES };
   }
 
   private loadCustomTemplates(): Template[] {
@@ -47,16 +30,6 @@ export class TemplateManager {
     });
   }
 
-  private loadBuiltInTemplates(): Template[] {
-    if (!existsSync(this.builtInDir)) return [];
-
-    const files = readdirSync(this.builtInDir).filter(f => f.endsWith('.json'));
-    return files.map(file => {
-      const content = readFileSync(join(this.builtInDir, file), 'utf-8');
-      return JSON.parse(content) as Template;
-    });
-  }
-
   async get(name: string): Promise<Template | null> {
     // Check custom templates first
     const customPath = join(this.config.getTemplatesDir(), `${name}.json`);
@@ -66,11 +39,8 @@ export class TemplateManager {
     }
 
     // Check built-in templates
-    const builtInPath = join(this.builtInDir, `${name}.json`);
-    if (existsSync(builtInPath)) {
-      const content = readFileSync(builtInPath, 'utf-8');
-      return JSON.parse(content);
-    }
+    const builtIn = BUILT_IN_TEMPLATES.find(t => t.name === name);
+    if (builtIn) return builtIn;
 
     return null;
   }
@@ -112,7 +82,7 @@ export class TemplateManager {
         RestartPolicy: { Name: resolvedTemplate.restart || 'no' },
         PortBindings: this.buildPortBindings(resolvedTemplate.ports || []),
         Binds: this.buildBinds(resolvedTemplate.volumes || []),
-      }
+      },
     };
 
     if (resolvedTemplate.healthcheck) {
@@ -139,7 +109,7 @@ export class TemplateManager {
     const Docker = (await import('dockerode')).default;
     const docker = new Docker({ socketPath: '/var/run/docker.sock' });
     const container = await docker.createContainer(config);
-    
+
     // Start container
     await container.start();
 
@@ -191,15 +161,19 @@ export class TemplateManager {
     if (!time) return 0;
     const match = time.match(/^(\d+)(s|m|h)$/);
     if (!match) return 0;
-    
+
     const value = parseInt(match[1]);
     const unit = match[2];
-    
+
     switch (unit) {
-      case 's': return value * 1000000000;
-      case 'm': return value * 60 * 1000000000;
-      case 'h': return value * 3600 * 1000000000;
-      default: return 0;
+      case 's':
+        return value * 1000000000;
+      case 'm':
+        return value * 60 * 1000000000;
+      case 'h':
+        return value * 3600 * 1000000000;
+      default:
+        return 0;
     }
   }
 
@@ -227,7 +201,7 @@ export class TemplateManager {
 
     const cmd = info.Config.Cmd;
     const entrypoint = info.Config.Entrypoint;
-    
+
     const template: Template = {
       name: templateName,
       description: `Template created from container ${info.Name}`,
@@ -262,7 +236,7 @@ export class TemplateManager {
         ports.push({
           host: parseInt(value[0].HostPort),
           container: parseInt(container),
-          protocol: protocol || 'tcp'
+          protocol: protocol || 'tcp',
         });
       }
     });
@@ -275,7 +249,7 @@ export class TemplateManager {
       return {
         source: parts[0],
         target: parts[1],
-        readonly: parts[2] === 'ro'
+        readonly: parts[2] === 'ro',
       };
     });
   }
