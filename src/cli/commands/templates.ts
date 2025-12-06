@@ -225,7 +225,7 @@ async function exportTemplate(manager: TemplateManager, templates: Template[]) {
       type: 'input',
       name: 'outputPath',
       message: 'Output file path:',
-      default: `./${templateName}.debu.json`
+      default: `./${templateName}.dazy.json`
     }
   ]);
 

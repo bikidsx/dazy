@@ -10,11 +10,11 @@ export class ConfigManager {
     const platform = process.platform;
     
     if (platform === 'darwin') {
-      this.configDir = join(homedir(), 'Library', 'Preferences', 'debu');
+      this.configDir = join(homedir(), 'Library', 'Preferences', 'dazy');
     } else if (platform === 'win32') {
-      this.configDir = join(process.env.APPDATA || homedir(), 'debu');
+      this.configDir = join(process.env.APPDATA || homedir(), 'dazy');
     } else {
-      this.configDir = join(homedir(), '.config', 'debu');
+      this.configDir = join(homedir(), '.config', 'dazy');
     }
 
     this.templatesDir = join(this.configDir, 'templates');

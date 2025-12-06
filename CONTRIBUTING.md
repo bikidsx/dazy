@@ -1,6 +1,6 @@
-# Contributing to Debu
+# Contributing to Dazy
 
-Thanks for your interest in contributing to Debu! This guide will help you get started.
+Thanks for your interest in contributing to Dazy! This guide will help you get started.
 
 ## Development Setup
 
@@ -11,8 +11,8 @@ Thanks for your interest in contributing to Debu! This guide will help you get s
 
 2. **Clone and Install**
    ```bash
-   git clone https://github.com/yourusername/debu.git
-   cd debu
+   git clone https://github.com/yourusername/dazy.git
+   cd dazy
    bun install
    ```
 
@@ -24,7 +24,7 @@ Thanks for your interest in contributing to Debu! This guide will help you get s
 ## Project Structure
 
 ```
-debu/
+dazy/
 ├── src/
 │   ├── cli/              # CLI commands and entry point
 │   ├── core/             # Core Docker client logic

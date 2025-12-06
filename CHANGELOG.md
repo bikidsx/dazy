@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to Debu will be documented in this file.
+All notable changes to Dazy will be documented in this file.
 
 ## [0.2.0] - 2025-12-06
 
@@ -93,7 +93,7 @@ All notable changes to Debu will be documented in this file.
 
 ### v0.2.0 Highlights
 
-Phase 2 brings the power of templates and first-class Compose support to Debu:
+Phase 2 brings the power of templates and first-class Compose support to Dazy:
 
 **Templates make Docker reusable:**
 - Save any container as a template with one command

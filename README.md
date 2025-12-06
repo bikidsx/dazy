@@ -1,19 +1,21 @@
-# Debu 🐳
+# Dazy 🐳
 
 > Make Docker as easy as running `npm install` - intuitive, fast, and shareable.
 
 ```
-██████╗ ███████╗██████╗ ██╗   ██╗
-██╔══██╗██╔════╝██╔══██╗██║   ██║
-██║  ██║█████╗  ██████╔╝██║   ██║
-██║  ██║██╔══╝  ██╔══██╗██║   ██║
-██████╔╝███████╗██████╔╝╚██████╔╝
-╚═════╝ ╚══════╝╚═════╝  ╚═════╝ 
+                                        ,---.
+ ██████╗  █████╗ ███████╗██╗   ██╗    ,'     `.
+ ██╔══██╗██╔══██╗╚══███╔╝╚██╗ ██╔╝   /  __   __\
+ ██║  ██║███████║  ███╔╝  ╚████╔╝   |  (  \ /  )
+ ██║  ██║██╔══██║ ███╔╝    ╚██╔╝    |   `.(*).'
+ ██████╔╝██║  ██║███████╗   ██║      \    /|\
+ ╚═════╝ ╚═╝  ╚═╝╚══════╝   ╚═╝       `--' | `--'
+                                          |
 ```
 
-**Debu** is a developer-first terminal UI for Docker that goes beyond monitoring to actively help you set up, share, and manage containerized environments. Unlike existing tools, Debu focuses on workflow automation, template management, and team collaboration.
+**Dazy** is a developer-first terminal UI for Docker that goes beyond monitoring to actively help you set up, share, and manage containerized environments. Unlike existing tools, Dazy focuses on workflow automation, template management, and team collaboration.
 
-## 🎯 Why Debu?
+## 🎯 Why Dazy?
 
 ### The Problem
 
@@ -42,7 +44,7 @@
 
 ### The Solution
 
-Debu solves these problems with:
+Dazy solves these problems with:
 
 1. **Template System** - Save any container configuration and reuse it instantly. Share templates with your team via JSON files.
 
@@ -64,7 +66,7 @@ Debu solves these problems with:
 - **10+ Built-in Templates** - Postgres, MySQL, MongoDB, Redis, Nginx, RabbitMQ, Elasticsearch, MinIO, Mailhog
 - **Variable Substitution** - Prompt for passwords, ports, and other values when running templates
 - **Import/Export** - Share templates with your team as JSON files
-- **One Command Setup** - `debu templates → Run → postgres` - Done in 10 seconds
+- **One Command Setup** - `dazy templates → Run → postgres` - Done in 10 seconds
 
 ### 📄 Docker Compose Integration ✅
 
@@ -100,34 +102,34 @@ Debu solves these problems with:
 ### Install via npm
 
 ```bash
-npm install -g debu
+npm install -g dazy
 ```
 
 ### Install via bun
 
 ```bash
-bun install -g debu
+bun install -g dazy
 ```
 
 Then run:
 
 ```bash
-debu
+dazy
 ```
 
 ## 📖 Usage
 
-Launch Debu and navigate with your keyboard:
+Launch Dazy and navigate with your keyboard:
 
 ```bash
-debu
+dazy
 ```
 
 ### Common Workflows
 
-**� Qusick Database Setup**
+**🚀 Quick Database Setup**
 ```bash
-debu
+dazy
 → Templates → Run Template → postgres
 → Enter password: ****
 → Container running on localhost:5432
@@ -135,7 +137,7 @@ debu
 
 **💾 Save Your Setup**
 ```bash
-debu
+dazy
 → Templates → Save from Container
 → Select your container → Name it
 → Template saved! Reuse on any project
@@ -143,20 +145,20 @@ debu
 
 **📤 Share with Team**
 ```bash
-debu
+dazy
 → Templates → Export Template
-→ Output: ./postgres-setup.debu.json
+→ Output: ./postgres-setup.dazy.json
 # Share this file with your team
 ```
 
 **📄 Manage Compose Stack**
 ```bash
-cd my-app && debu
+cd my-app && dazy
 → Compose Projects
 → Up / Down / Logs / Restart
 ```
 
-## �S️ Roadmap
+## 🗺️ Roadmap
 
 ### ✅ Phase 1: Core Docker Management (Complete)
 Fast, keyboard-driven container, image, volume, and network management.
@@ -173,14 +175,20 @@ Auto-detect project type, suggest services, quick setup wizards.
 ### 🎨 Phase 5: Polish (Planned)
 Live stats dashboard, cleanup automation, registry browser, themes.
 
+**Full details:** [PRODUCT.md](./PRODUCT.md)
 
-## � DocumCentation
+## 📚 Documentation
 
 - [Template System Guide](./docs/TEMPLATES.md)
 - [Docker Compose Guide](./docs/COMPOSE.md)
+- [Product Roadmap](./PRODUCT.md)
 - [Changelog](./CHANGELOG.md)
 
 ## 📄 License
 
 MIT License - see [LICENSE](./LICENSE)
 
+---
+
+**Current Status:** Phase 2 Complete ✅  
+**Next Up:** Phase 3 - Multi-environment support

@@ -13,12 +13,14 @@ import { composeCommand } from './commands/compose.js';
 import { logger } from '../utils/logger.js';
 
 const ASCII_LOGO = `
-██████╗ ███████╗██████╗ ██╗   ██╗
-██╔══██╗██╔════╝██╔══██╗██║   ██║
-██║  ██║█████╗  ██████╔╝██║   ██║
-██║  ██║██╔══╝  ██╔══██╗██║   ██║
-██████╔╝███████╗██████╔╝╚██████╔╝
-╚═════╝ ╚══════╝╚═════╝  ╚═════╝ 
+                                        ,---.
+ ██████╗  █████╗ ███████╗██╗   ██╗    ,'     \`.
+ ██╔══██╗██╔══██╗╚══███╔╝╚██╗ ██╔╝   /  __   __\\
+ ██║  ██║███████║  ███╔╝  ╚████╔╝   |  (  \\ /  )
+ ██║  ██║██╔══██║ ███╔╝    ╚██╔╝    |   \`.(*).'
+ ██████╔╝██║  ██║███████╗   ██║      \\    /|\\
+ ╚═════╝ ╚═╝  ╚═╝╚══════╝   ╚═╝       \`--' | \`--'
+                                          |
 `;
 
 async function mainMenu() {
@@ -95,9 +97,9 @@ async function mainMenu() {
 const program = new Command();
 
 program
-  .name('debu')
+  .name('dazy')
   .description('Developer-first terminal UI for Docker management')
-  .version('0.1.0');
+  .version('0.2.0');
 
 program
   .command('interactive')

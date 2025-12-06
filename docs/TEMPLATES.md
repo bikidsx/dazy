@@ -1,6 +1,6 @@
 # Template System Guide
 
-Templates in Debu allow you to save, reuse, and share Docker container configurations. Think of them as blueprints for containers.
+Templates in Dazy allow you to save, reuse, and share Docker container configurations. Think of them as blueprints for containers.
 
 ## What are Templates?
 
@@ -14,7 +14,7 @@ A template is a JSON file that describes how to create and configure a Docker co
 
 ## Built-in Templates
 
-Debu comes with 10+ pre-configured templates for common services:
+Dazy comes with 10+ pre-configured templates for common services:
 
 | Template | Description | Ports |
 |----------|-------------|-------|
@@ -71,7 +71,7 @@ This captures:
 
 ### Manual Template Creation
 
-Create a JSON file in `~/.config/debu/templates/` (macOS/Linux):
+Create a JSON file in `~/.config/dazy/templates/` (macOS/Linux):
 
 ```json
 {
@@ -127,7 +127,7 @@ Templates support variables for dynamic configuration:
 }
 ```
 
-When running this template, Debu will prompt for these values.
+When running this template, Dazy will prompt for these values.
 
 ## Sharing Templates
 
@@ -137,7 +137,7 @@ When running this template, Debu will prompt for these values.
 bun run dev templates
 # Select "Export Template"
 # Choose template
-# Specify output path (e.g., ./my-template.debu.json)
+# Specify output path (e.g., ./my-template.dazy.json)
 ```
 
 ### Import Template
@@ -157,11 +157,11 @@ Share the exported JSON file with your team via:
 ## Template Storage
 
 Templates are stored in:
-- **macOS**: `~/Library/Preferences/debu/templates/`
-- **Linux**: `~/.config/debu/templates/`
-- **Windows**: `%APPDATA%/debu/templates/`
+- **macOS**: `~/Library/Preferences/dazy/templates/`
+- **Linux**: `~/.config/dazy/templates/`
+- **Windows**: `%APPDATA%/dazy/templates/`
 
-Built-in templates are in the Debu installation directory and cannot be modified.
+Built-in templates are in the Dazy installation directory and cannot be modified.
 
 ## Best Practices
 
@@ -188,10 +188,10 @@ bun run dev templates → Run → postgres
 ```bash
 # Export your working setup
 bun run dev templates → Export → my-dev-stack
-# Share my-dev-stack.debu.json with team
+# Share my-dev-stack.dazy.json with team
 
 # Team member imports
-bun run dev templates → Import → my-dev-stack.debu.json
+bun run dev templates → Import → my-dev-stack.dazy.json
 # Run template → Instant identical setup!
 ```
 
