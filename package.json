@@ -1,6 +1,6 @@
 {
   "name": "dazy",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Developer-first terminal UI for Docker management",
   "type": "module",
   "bin": {

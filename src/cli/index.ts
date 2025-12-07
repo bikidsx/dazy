@@ -24,7 +24,7 @@ const ASCII_LOGO = `
 async function mainMenu() {
   console.clear();
   console.log(chalk.cyan(ASCII_LOGO));
-  console.log(chalk.gray('🐳 Docker Manager v0.2.4'));
+  console.log(chalk.gray('🐳 Docker Manager v0.2.6'));
   console.log(chalk.gray('─'.repeat(50)) + '\n');
 
   // Check Docker connection

@@ -1,6 +1,6 @@
-# Dazy 🐳
+# Dazy
 
-> Make Docker as easy as running `npm install` - intuitive, fast, and shareable.
+A terminal UI for Docker that actually helps you get things done.
 
 ```
  ██████╗  █████╗ ███████╗██╗   ██╗        .
@@ -11,190 +11,87 @@
  ╚═════╝ ╚═╝  ╚═╝╚══════╝   ╚═╝   ~^~^~^~^~^~^~^~^~^~^~^~^~
 ```
 
-**Dazy** is a developer-first terminal UI for Docker that goes beyond monitoring to actively help you set up, share, and manage containerized environments. Unlike existing tools, Dazy focuses on workflow automation, template management, and team collaboration.
+## What is this?
 
-## 🎯 Why Dazy?
+Dazy is a keyboard-driven Docker manager for developers who live in the terminal. It's not just another monitoring tool - it helps you save container setups as templates, manage Compose projects, and share configurations with your team.
 
-### The Problem
-
-**Docker CLI is powerful but tedious:**
-- Commands are verbose and hard to remember
-- No visual feedback or easy exploration
-- Difficult to manage multiple containers simultaneously
-
-**Docker Desktop is heavy:**
-- Uses 1-2GB RAM constantly
-- Electron-based, slow startup
-- Doesn't work over SSH
-- Overkill for terminal-focused developers
-
-**Existing TUIs are monitoring-focused:**
-- Great for viewing, weak for creating
-- No template or configuration management
-- Limited Docker Compose support
-- Can't save and share setups
-
-**Team onboarding is painful:**
-- "Works on my machine" syndrome
-- Long setup docs that get outdated
-- Manual container configuration
-- No easy way to share working environments
-
-### The Solution
-
-Dazy solves these problems with:
-
-1. **Template System** - Save any container configuration and reuse it instantly. Share templates with your team via JSON files.
-
-2. **First-Class Compose Support** - Manage multi-container applications with an intuitive interface. Auto-detect compose files and control services interactively.
-
-3. **Keyboard-Driven Workflow** - Navigate everything with your keyboard. Fast, efficient, and works perfectly over SSH.
-
-4. **Lightweight & Fast** - Built with Bun. Minimal resource usage, instant startup. No Electron bloat.
-
-## ✨ Features
-
-### 🎯 Template System ✅
-
-**The Problem:** Setting up databases, caches, and services is repetitive. You configure Postgres once, then do it again on every project.
-
-**The Solution:** Templates let you save any container configuration and reuse it instantly.
-
-- **Save from Running Containers** - Convert any container to a reusable template
-- **10+ Built-in Templates** - Postgres, MySQL, MongoDB, Redis, Nginx, RabbitMQ, Elasticsearch, MinIO, Mailhog
-- **Variable Substitution** - Prompt for passwords, ports, and other values when running templates
-- **Import/Export** - Share templates with your team as JSON files
-- **One Command Setup** - `dazy templates → Run → postgres` - Done in 10 seconds
-
-### 📄 Docker Compose Integration ✅
-
-**The Problem:** Managing multi-container apps with docker-compose commands is clunky.
-
-**The Solution:** First-class Compose support with interactive management.
-
-- **Auto-Detection** - Automatically finds compose files in your project
-- **Service Overview** - See all services, their status, and ports at a glance
-- **Interactive Actions** - Up, down, restart, logs, build with keyboard navigation
-- **Per-Service Control** - Restart just the web server, view logs for just the database
-- **Validation** - Check compose file syntax before running
-
-### 📦 Container Management ✅
-
-- **List & Filter** - See all containers with status, uptime, ports
-- **Quick Actions** - Start, stop, restart, remove with keyboard shortcuts
-- **Logs Viewer** - View logs with timestamps and follow mode
-- **Shell Access** - Execute into containers with automatic shell detection
-
-### 🖼️ Image, Volume & Network Management ✅
-
-- **Images** - List, pull, remove images with progress indicators
-- **Volumes** - Create, list, remove volumes with safety checks
-- **Networks** - Create custom networks, connect/disconnect containers
-
-## 🚀 Installation
-
-### Prerequisites
-
-- Docker daemon running
-
-### Linux: Docker Permissions
-
-On Linux, Docker requires root access by default. Add your user to the docker group:
-
-```bash
-sudo usermod -aG docker $USER
-# Log out and back in, then run:
-dazy
-```
-
-### Install via npm
+## Installation
 
 ```bash
 npm install -g dazy
 ```
 
-### Install via bun
+Requires Docker to be running.
 
-```bash
-bun install -g dazy
-```
-
-Then run:
+## Quick start
 
 ```bash
 dazy
 ```
 
-## 📖 Usage
+Navigate with arrow keys, select with Enter. That's it.
 
-Launch Dazy and navigate with your keyboard:
+## Features
 
-```bash
-dazy
+**Templates** - Save any container as a reusable template. Need Postgres for a new project? Run the template, enter a password, done. No more googling docker run commands.
+
+**Compose support** - Auto-detects compose files in your project. Start, stop, restart services, view logs - all from one interface.
+
+**Live stats** - Watch CPU, memory, and network usage in real-time for any running container.
+
+**The basics** - Start, stop, restart, remove containers. View logs, exec into shells. Pull images, manage volumes and networks.
+
+## Built-in templates
+
+Postgres, MySQL, MongoDB, Redis, Nginx, RabbitMQ, Elasticsearch, MinIO, Mailhog - ready to run with sensible defaults.
+
+## Usage examples
+
+**Spin up a database:**
+```
+dazy → Templates → postgres → enter password → running on :5432
 ```
 
-### Common Workflows
-
-**🚀 Quick Database Setup**
-```bash
-dazy
-→ Templates → Run Template → postgres
-→ Enter password: ****
-→ Container running on localhost:5432
+**Save your setup:**
+```
+dazy → Templates → Save from Container → pick one → name it → done
 ```
 
-**💾 Save Your Setup**
-```bash
-dazy
-→ Templates → Save from Container
-→ Select your container → Name it
-→ Template saved! Reuse on any project
+**Share with team:**
+```
+dazy → Templates → Export → postgres-setup.dazy.json
 ```
 
-**📤 Share with Team**
-```bash
-dazy
-→ Templates → Export Template
-→ Output: ./postgres-setup.dazy.json
-# Share this file with your team
+**Manage compose stack:**
+```
+cd my-app && dazy → Compose → up/down/logs/restart
 ```
 
-**📄 Manage Compose Stack**
+## Linux permissions
+
+On Linux, if you get a permission error, Dazy will offer to run with sudo. For a permanent fix:
+
 ```bash
-cd my-app && dazy
-→ Compose Projects
-→ Up / Down / Logs / Restart
+sudo usermod -aG docker $USER
+# then log out and back in
 ```
 
-## 🗺️ Roadmap
+## Roadmap
 
-### ✅ Phase 1: Core Docker Management (Complete)
-Fast, keyboard-driven container, image, volume, and network management.
-
-### ✅ Phase 2: Templates & Compose (Complete)
-Save containers as templates, 10+ built-in templates, first-class Compose support.
-
-### 🚧 Phase 3: Multi-Environment (Next)
-SSH tunnels, context switching, environment comparison.
-
-### 📋 Phase 4: Developer Experience (Planned)
-Auto-detect project type, suggest services, quick setup wizards.
-
-### 🎨 Phase 5: Polish (Planned)
-Live stats dashboard, cleanup automation, registry browser, themes.
+- [x] Container, image, volume, network management
+- [x] Template system with built-in templates
+- [x] Docker Compose integration
+- [x] Live container stats
+- [ ] Multi-environment support (SSH to remote Docker)
+- [ ] Project detection and setup wizards
 
 
-## 📚 Documentation
+## Docs
 
-- [Template System Guide](./docs/TEMPLATES.md)
-- [Docker Compose Guide](./docs/COMPOSE.md)
-- [Product Roadmap](./PRODUCT.md)
+- [Templates guide](./docs/TEMPLATES.md)
+- [Compose guide](./docs/COMPOSE.md)
 - [Changelog](./CHANGELOG.md)
 
-## 📄 License
+## License
 
-MIT License - see [LICENSE](./LICENSE)
-
----
-
-
+MIT
